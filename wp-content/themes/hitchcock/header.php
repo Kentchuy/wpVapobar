@@ -14,7 +14,7 @@
 	<body <?php body_class(); ?>>
 
 		<!-- Affichage de la modal -->
-		<?php echo do_shortcode('[eu-disclaimer'); ?>
+		<?php if( shortcode_exists(eu-disclaimer)){ echo do_shortcode('[eu-disclaimer]');} ?>
 
 		<?php 
 		if ( function_exists( 'wp_body_open' ) ) {
