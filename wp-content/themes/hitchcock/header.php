@@ -13,6 +13,7 @@
 	
 	<body <?php body_class(); ?>>
 
+		<!-- Affichage de la modal -->
 		<?php echo do_shortcode('[eu-disclaimer'); ?>
 
 		<?php 
