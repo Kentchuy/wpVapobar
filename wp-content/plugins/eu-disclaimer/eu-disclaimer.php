@@ -16,9 +16,9 @@ if (class_exists("DisclaimerGestionTable")){
 }
 if (isset($gerer_table)){
     register_activation_hook(__FILE__, array($gerer_table,'creerTable'));
-    // Sur activation du plugin
+    // Sur activation du plugin - creation bdd
     register_deactivation_hook(__FILE__, array($gerer_table,'supprimerTable'));
-    // Sur désactivation du plugin
+    // Sur désactivation du plugin - suppression bdd
 }
 
 

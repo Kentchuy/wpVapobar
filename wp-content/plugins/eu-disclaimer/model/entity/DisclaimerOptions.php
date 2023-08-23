@@ -38,8 +38,5 @@ public function setRedirectionko($redirection_ko){
     $this->redirection_ko = $redirection_ko;
     return $this;
 }
-
-
 }
-
 ?>

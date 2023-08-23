@@ -11,9 +11,9 @@ class DisclaimerGestionTable {
         $message = new DisclaimerOptions();
         // On set un message par défaut sur l'objet
         $message->setMessageDisclaimer("Au regard de la loi européenne, vous devez nous confirmer que vous avez plus de 18 ans pour visiter ce site");
-        $message->setRedirectionko("https://google.com/");
+        $message->setRedirectionko("https://google.fr/");
         global $wpdb;
-        // global permet à peu importe l'instance d'une variable d'être toujours connectée (ex: On déclare une variable puis une fonction avec une variable de même nom => elles ne seront pas connectées mais si dans la fonction on la déclare comme globale elle reprendra la valeur précédemment déclarée)
+        // global permet à peu importe l'instance d'une variable d'être toujours connectée (ex: On déclare une variable puis une fonction avec une variable de même nom => elles ne seront pas connectées mais si dans la fonction on la déclare comme globale elle prendra la valeur précédemment déclarée)
         $tableDisclaimer = $wpdb->prefix.'disclaimer_options';
         if ($wpdb->get_var("SHOW TABLES LIKE $tableDisclaimer") != $tableDisclaimer){
             $sql = "CREATE TABLE $tableDisclaimer(
@@ -27,7 +27,7 @@ class DisclaimerGestionTable {
             }
             // Insertion du message par défaut 
             $wpdb->insert(
-                $wpdb->prefix . 'disclaimer_options',
+                $wpdb->prefix.'disclaimer_options',
                 array(
                     'message_disclaimer' => $message->getMessageDisclaimer(),
                     'redirection_ko' => $message->getRedirectionko(),
@@ -39,40 +39,53 @@ class DisclaimerGestionTable {
     public function supprimerTable(){
         // $wpdb sert à récupérer l'objet contenant les informations relatives à la BDD
         global $wpdb;
-        $talbe_disclaimer = $wpdb->prefix."disclaimer_options";
+        $table_disclaimer = $wpdb->prefix."disclaimer_options";
         $sql = "DROP TABLE $table_disclaimer";
         $wpdb->query($sql);
     }
 
-    static function insererDansTable(DisclaimerOptions $option){
-        $message_inserer_valeur = '';
+    // static function insererDansTable(DisclaimerOptions $option){
+    //     $message_inserer_valeur = '';
+    //     global $wpdb;
+    //     try{
+    //         $table_disclaimer = $wpdb->prefix.'disclaimer_options';
+    //         $sql = $wpdb->prepare(
+    //             "
+    //             UPDATE $table_disclaimer
+    //             SET message_disclaimer = '%s',
+    //             redirection_ko = '%s' WHERE id__disclaimer = %s",
+    //             $option->getMessageDisclaimer(),
+    //             $option->getRedirectionko(),1
+    //         );
+    //         // %s permet simplement de préciser qu'une valeur string est attendue
+    //         $wpdb->query($sql);
+    //         return $message_inserer_valeur = '<span style="color:green; font-size:16px;">Les données ont été correctement été mises à jour !</span>';
+    //     } catch (Exception $e){
+    //         return $message_inserer_valeur = '<span style="color:red; font-size:16px;">Une erreur est survenue !</span>';
+    //     }
+    // }
+// %d sur id_disclaimer ?
+    static function insererDansTable($contenu, $url) {
         global $wpdb;
-        try{
-            $table_disclaimer = $wpdb->prefix.'disclaimer_options';
-            $sql = $wpdb->prepare(
-                "
+        $table_disclaimer = $wpdb->prefix.'disclaimer_options';
+        $sql = $wpdb->prepare(
+            "
                 UPDATE $table_disclaimer
-                SET message_disclaimer = '%s',
-                redirection_ko = '%s' WHERE id__disclaimer = %s",
-                $option->getMessageDisclaimer(),
-                $option->getRedirectionko(),1
-            );
-            // %s permet simplement de préciser qu'une valeur string est attendue
-            $wpdb->query($sql);
-            return $message_inserer_valeur = '<span style="color:green; font-size:16px;">Les données ont été correctement été mises à jour !</span>';
-        } catch (Exception $e){
-            return $message_inserer_valeur = '<span style="color:red; font-size:16px;">Une erreur est survenue !</span>';
-        }
+                SET message_disclaimer = '%s', redirection_ko = '%s'
+                WHERE id_disclaimer = '%s'
+            ", $contenu, $url, 1
+        );
+        $wpdb->query($sql);
     }
 
     function AfficherDonneModal(){
         global $wpdb;
         $query = "SELECT * FROM wp_disclaimer_options";
         $row = $wpdb->get_row($query);
-        $message__disclaimer = $row->message_disclaimer;
+        $message_disclaimer = $row->message_disclaimer;
         $lien_redirection = $row->redirection_ko;
         return '<div id="monModal" class="modal">
-        <p>Le vapobbar, vous souhaite la bienvenue !</p>
+        <p>Le vapobar, vous souhaite la bienvenue !</p>
         <p>'. $message_disclaimer.'</p><a href="'.$lien_redirection.'"
         type="button" class="btn-red">Non</a>
         <a href="#" type="button" rel="modal:close" class="btn-green">Oui</a>
