@@ -1,12 +1,13 @@
 <!-- Vue de la page des paramètres du plug-in -->
-<?php 
+<?php
 if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
     $text = new DisclaimerOptions();
     $text->setMessageDisclaimer($_POST['message_disclaimer']);
     $text->setRedirectionko($_POST['url_redirection']);
-    $message = DisclaimerGestionTable::insererDansTable($text);
+    DisclaimerGestionTable::insererDansTable($text->getMessageDisclaimer(),$text->getRedirectionko());
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,18 +61,6 @@ if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
     <h3>
         Centre AFPA / session DWWM
     </h3>
-    <img src="<?php echo plugin_dir_url( dirname(__FILE__)) . 'assets/img/layout_set_logo.jpg'; ?>" width="10%" />
+    <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/img/layout_set_logo.png'; ?>" width="10%" />
     </body>
 </html>
-
-<?php
-
-// Use \model\entity\DisclaimerOptions;
-
-$text = new DisclaimerOptions();
-$text->setMessageDisclaimer($_POST['message_disclaimer']);
-$text->setRedirectionko($_POST['url_redirection']);
-DisclaimerGestionTable::insererDansTable($text->getMessageDisclaimer(),
-$text->getRedirectionko());
-
-?>

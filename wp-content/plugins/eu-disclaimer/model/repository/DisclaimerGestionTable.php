@@ -18,7 +18,7 @@ class DisclaimerGestionTable {
         if ($wpdb->get_var("SHOW TABLES LIKE $tableDisclaimer") != $tableDisclaimer){
             $sql = "CREATE TABLE $tableDisclaimer(
                 id_disclaimer INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            message_disclaimer TEXT NOT NULL, redirection_ko TEXT NOT NULL
+                message_disclaimer TEXT NOT NULL, redirection_ko TEXT NOT NULL
             )
             ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; ";
             // Message d'erreur
@@ -44,12 +44,12 @@ class DisclaimerGestionTable {
         $wpdb->query($sql);
     }
 
-    function insererDansTable(DisclaimerOptions, $option){
+    static function insererDansTable(DisclaimerOptions $option){
         $message_inserer_valeur = '';
-        global $wpbd;
+        global $wpdb;
         try{
-            $table_disclaimer = $wpbd->prefix.'disclaimer_options';
-            $sql = $wpbd->prepare(
+            $table_disclaimer = $wpdb->prefix.'disclaimer_options';
+            $sql = $wpdb->prepare(
                 "
                 UPDATE $table_disclaimer
                 SET message_disclaimer = '%s',
@@ -58,7 +58,7 @@ class DisclaimerGestionTable {
                 $option->getRedirectionko(),1
             );
             // %s permet simplement de préciser qu'une valeur string est attendue
-            $wpbd->query($sql);
+            $wpdb->query($sql);
             return $message_inserer_valeur = '<span style="color:green; font-size:16px;">Les données ont été correctement été mises à jour !</span>';
         } catch (Exception $e){
             return $message_inserer_valeur = '<span style="color:red; font-size:16px;">Une erreur est survenue !</span>';
@@ -66,9 +66,9 @@ class DisclaimerGestionTable {
     }
 
     function AfficherDonneModal(){
-        global $wpbd;
+        global $wpdb;
         $query = "SELECT * FROM wp_disclaimer_options";
-        $row = $wpbd->get_row($query);
+        $row = $wpdb->get_row($query);
         $message__disclaimer = $row->message_disclaimer;
         $lien_redirection = $row->redirection_ko;
         return '<div id="monModal" class="modal">
