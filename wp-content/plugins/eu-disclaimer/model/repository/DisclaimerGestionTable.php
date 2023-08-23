@@ -44,16 +44,25 @@ class DisclaimerGestionTable {
         $wpdb->query($sql);
     }
 
-    function insererDansTable($contenu, $url){
+    function insererDansTable(DisclaimerOptions, $option){
+        $message_inserer_valeur = '';
         global $wpbd;
-        $table_disclaimer = $wpbd->prefix.'disclaimer_options';
-        $sql = $wpbd->prepare(
-            "
-            UPDATE $table_disclaimer
-            SET message_disclaimer = '%s', redirection_ko = '%s' WHERE id__disclaimer = %s",$contenu,$url,1
-        );
-        // %s permet simplement de préciser qu'une valeur string est attendue
-        $wpbd->query($sql);
+        try{
+            $table_disclaimer = $wpbd->prefix.'disclaimer_options';
+            $sql = $wpbd->prepare(
+                "
+                UPDATE $table_disclaimer
+                SET message_disclaimer = '%s',
+                redirection_ko = '%s' WHERE id__disclaimer = %s",
+                $option->getMessageDisclaimer(),
+                $option->getRedirectionko(),1
+            );
+            // %s permet simplement de préciser qu'une valeur string est attendue
+            $wpbd->query($sql);
+            return $message_inserer_valeur = '<span style="color:green; font-size:16px;">Les données ont été correctement été mises à jour !</span>';
+        } catch (Exception $e){
+            return $message_inserer_valeur = '<span style="color:red; font-size:16px;">Une erreur est survenue !</span>';
+        }
     }
 
     function AfficherDonneModal(){

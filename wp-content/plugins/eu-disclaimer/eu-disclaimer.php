@@ -83,12 +83,20 @@ function ajouter_css() {
     endif;
 }
 
+// Active le modal sans utiliser de shortcode
+// Utilisation : add_action ('hook', 'fonction');
+add_action('wp_body_open', 'afficheModalDansBody');
 
-// Ajout du modal et du shortcode
-add_shortcode('eu-disclaimer', 'afficheModal');
-
-function afficheModal() {
-    return DisclaimerGestionTable::AfficherDonneModal();
+function afficheModalDansBody() {
+    echo DisclaimerGestionTable::AfficherDonneModal();
 }
+
+// Ajout du modal et du shortcode ----- 
+// Déprécié car pour l'utilisation du plugin la personne doit insérer le shortcode dans les fichiers du thème ou de l'article
+
+// add_shortcode('eu-disclaimer', 'afficheModal');
+// function afficheModal() {
+//     return DisclaimerGestionTable::AfficherDonneModal();
+// }
 
 ?>

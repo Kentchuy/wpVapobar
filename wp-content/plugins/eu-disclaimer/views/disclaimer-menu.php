@@ -1,4 +1,13 @@
 <!-- Vue de la page des paramètres du plug-in -->
+<?php 
+if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
+    $text = new DisclaimerOptions();
+    $text->setMessageDisclaimer($_POST['message_disclaimer']);
+    $text->setRedirectionko($_POST['url_redirection']);
+    $message = DisclaimerGestionTable::insererDansTable($text);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +18,7 @@
 </head>
 <body>
     <h1>EU DISCLAIMER</h1>
-    <br/>
+    <br>
     <h2>Configuration</h2>
     <p><?php echo @$message; ?></p>
     <form method="post" action="" novalidate="novalidate">
@@ -35,16 +44,19 @@
             <input type="submit" name="submit" id="submit" class="button button-primary" value="Enregistrer les modififcations" />
         </p>
     </form>
-    <br/>
+    <br>
     ACTUELLEMENT dans la BDD<br/>
     Message dans la BDD : <?php echo @$message_disclaimer; ?>
-    <br/>
+    <br>
     Lien dans la BDD : <?php echo @$lien_redirection; ?>
     <p>
         Exemple : La législation nous impose de vous informer sur la nocivité des produits à base de nicotine, 
         vous devez avoir plus de 18 ans pour consulter ce site !
     </p>
-    <br/>
+    <br>
+    <!-- Message confirmant la màj -->
+    <p><?php if(isset($message)) echo $message; ?></p>
+    <br>
     <h3>
         Centre AFPA / session DWWM
     </h3>
