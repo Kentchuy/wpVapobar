@@ -99,4 +99,9 @@ function afficheModalDansBody() {
 //     return DisclaimerGestionTable::AfficherDonneModal();
 // }
 
+
+/* VA AVEC CE CODE DANS UN FICHIER WORDPRESS DÉSIGNÉ
+* <!-- Affichage de la modal -->
+* <?php echo do_shortcode('[eu-disclaimer'); ?>
+*/
 ?>

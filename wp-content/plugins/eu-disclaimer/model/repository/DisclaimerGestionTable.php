@@ -15,23 +15,25 @@ class DisclaimerGestionTable {
         global $wpdb;
         // global permet à peu importe l'instance d'une variable d'être toujours connectée (ex: On déclare une variable puis une fonction avec une variable de même nom => elles ne seront pas connectées mais si dans la fonction on la déclare comme globale elle prendra la valeur précédemment déclarée)
         $tableDisclaimer = $wpdb->prefix.'disclaimer_options';
-        if ($wpdb->get_var("SHOW TABLES LIKE $tableDisclaimer") != $tableDisclaimer){
-            $sql = "CREATE TABLE $tableDisclaimer(
-                id_disclaimer INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                message_disclaimer TEXT NOT NULL, redirection_ko TEXT NOT NULL
-            )
-            ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; ";
+        if ($wpdb->get_var("SHOW TABLES LIKE $tableDisclaimer") != $tableDisclaimer) {
+            // Si la table n'existe pas encore alors :
+            $sql = "CREATE TABLE $tableDisclaimer
+                (id_disclaimer INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                message_disclaimer TEXT NOT NULL, 
+                redirection_ko TEXT NOT NULL)
+            ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
             // Message d'erreur
-            if(!!$wpdb->query($sql)){
+            if(!$wpdb->query($sql)){
                 die("Une erreur est survenue; contactez le développeur du plugin...");
             }
             // Insertion du message par défaut 
             $wpdb->insert(
-                $wpdb->prefix.'disclaimer_options',
+                $wpdb->prefix . 'disclaimer_options',
                 array(
                     'message_disclaimer' => $message->getMessageDisclaimer(),
                     'redirection_ko' => $message->getRedirectionko(),
-                ), array('%s', '%s'));
+                ), array('%s', '%s')
+            );
                 $wpdb->query($sql);
         }
     }
@@ -78,9 +80,9 @@ class DisclaimerGestionTable {
         $wpdb->query($sql);
     }
 
-    function AfficherDonneModal(){
+    static function AfficherDonneModal(){
         global $wpdb;
-        $query = "SELECT * FROM wp_disclaimer_options";
+        $query = "SELECT * FROM " . $wpdb->prefix."disclaimer_options";
         $row = $wpdb->get_row($query);
         $message_disclaimer = $row->message_disclaimer;
         $lien_redirection = $row->redirection_ko;
@@ -88,7 +90,7 @@ class DisclaimerGestionTable {
         <p>Le vapobar, vous souhaite la bienvenue !</p>
         <p>'. $message_disclaimer.'</p><a href="'.$lien_redirection.'"
         type="button" class="btn-red">Non</a>
-        <a href="#" type="button" rel="modal:close" class="btn-green">Oui</a>
+        <a href="#" type="button" rel="modal:close" class="btn-green" id="actionDisclaimer">Oui</a>
         </div>' ;
     }
 
