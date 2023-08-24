@@ -4,9 +4,9 @@ if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
     // Si rien des les champs message et lien de redirection
     $text = new DisclaimerOptions();
     // On prend le modèle constructeur
-    $text->setMessageDisclaimer($_POST['message_disclaimer']);
+    $text->setMessageDisclaimer(htmlspecialchars($_POST['message_disclaimer']));
     // Dans ce modèle on établi le message disclaimer par ce qui est posté
-    $text->setRedirectionko($_POST['url_redirection']);
+    $text->setRedirectionko(htmlspecialchars($_POST['url_redirection']));
     // Pareillement avec l'url de redirection
     DisclaimerGestionTable::insererDansTable($text->getMessageDisclaimer(),$text->getRedirectionko());
     // On fait appel à la classe DisclaimerGestionTable et sa fonction insererDansTable avec les 2 valeurs précédemment établies
