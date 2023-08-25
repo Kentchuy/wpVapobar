@@ -13,10 +13,7 @@ if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
 }
 // echo getcwd();
 // Me retourne E:\Docs\TRAVAIL_CV_DOC\Code\Logiciels\Laragon\www\wpVapobar\wp-admin
-// Pourquoi ??
-
-require_once (dirname(__DIR__).'../model/repository/DisclaimerGestionTable.php');
-DisclaimerGestionTable::AfficherMenu();
+// Pourquoi pas le chemin jusqu'à ce fichier ??
 
 ?>
 
@@ -41,7 +38,7 @@ DisclaimerGestionTable::AfficherMenu();
                     <label for="message_disclaimer">Message du disclaimer</label>
                 </th>
                 <td>
-                    <input type="text" name="message_disclaimer" id="message_disclaimer" value="<?php echo @$message_disclaimer; ?>" class="regular-text" />
+                    <input type="text" name="message_disclaimer" id="message_disclaimer" value="<?php echo @DisclaimerGestionTable::AfficherMessage(); ?>" class="regular-text" />
                 </td>
             </tr>
             <tr>
@@ -49,7 +46,7 @@ DisclaimerGestionTable::AfficherMenu();
                     <label for="url_redirection">Url de redirection</label>
                 </th>
                 <td>
-                    <input type="text" name="url_redirection" id="url_redirection" value="<?php echo @$lien_redirection; ?>" class="regular-text" />
+                    <input type="text" name="url_redirection" id="url_redirection" value="<?php echo @DisclaimerGestionTable::AfficherLien(); ?>" class="regular-text" />
                 </td>
             </tr>
         </table>
@@ -59,9 +56,9 @@ DisclaimerGestionTable::AfficherMenu();
     </form>
     <br>
     ACTUELLEMENT dans la BDD<br/>
-    Message dans la BDD : <?php echo @$message_disclaimer; ?>
+    Message dans la BDD : <?php echo @DisclaimerGestionTable::AfficherMessage(); ?>
     <br>
-    Lien dans la BDD : <?php echo @$lien_redirection; ?>
+    Lien dans la BDD : <?php echo @DisclaimerGestionTable::AfficherLien(); ?>
     <p>
         Exemple : La législation nous impose de vous informer sur la nocivité des produits à base de nicotine, 
         vous devez avoir plus de 18 ans pour consulter ce site !
