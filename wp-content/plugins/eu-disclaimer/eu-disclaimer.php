@@ -50,6 +50,7 @@ function disclaimerFonction(){
 
 
 add_action('init', 'inserer_js_dans_footer');
+// fonction hook
 // Ajout du JS JQuery par CDN avec le modal
     function inserer_js_dans_footer() {
     if (!is_admin()) :
@@ -69,6 +70,7 @@ add_action('init', 'inserer_js_dans_footer');
 }
 
 add_action('wp_head', 'ajouter_css',1);
+// fonction hook
 // Ajout du CSS par CDN
 function ajouter_css() {
     if (!is_admin()) :

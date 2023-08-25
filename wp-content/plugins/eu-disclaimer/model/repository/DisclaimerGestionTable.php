@@ -15,8 +15,9 @@ class DisclaimerGestionTable {
         global $wpdb;
         // global permet à peu importe l'instance d'une variable d'être toujours connectée (ex: On déclare une variable puis une fonction avec une variable de même nom => elles ne seront pas connectées mais si dans la fonction on la déclare comme globale elle prendra la valeur précédemment déclarée)
         $tableDisclaimer = $wpdb->prefix.'disclaimer_options';
+        // table disclaimer_options sous variable
         if ($wpdb->get_var("SHOW TABLES LIKE $tableDisclaimer") != $tableDisclaimer) {
-            // Si la table n'existe pas encore alors :
+            // Si la table n'existe pas encore alors on créé la table :
             $sql = "CREATE TABLE $tableDisclaimer
                 (id_disclaimer INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 message_disclaimer TEXT NOT NULL, 
@@ -46,29 +47,9 @@ class DisclaimerGestionTable {
         $wpdb->query($sql);
     }
 
-    // static function insererDansTable(DisclaimerOptions $option){
-    //     $message_inserer_valeur = '';
-    //     global $wpdb;
-    //     try{
-    //         $table_disclaimer = $wpdb->prefix.'disclaimer_options';
-    //         $sql = $wpdb->prepare(
-    //             "
-    //             UPDATE $table_disclaimer
-    //             SET message_disclaimer = '%s',
-    //             redirection_ko = '%s' WHERE id__disclaimer = %s",
-    //             $option->getMessageDisclaimer(),
-    //             $option->getRedirectionko(),1
-    //         );
-    //         // %s permet simplement de préciser qu'une valeur string est attendue
-    //         $wpdb->query($sql);
-    //         return $message_inserer_valeur = '<span style="color:green; font-size:16px;">Les données ont été correctement été mises à jour !</span>';
-    //     } catch (Exception $e){
-    //         return $message_inserer_valeur = '<span style="color:red; font-size:16px;">Une erreur est survenue !</span>';
-    //     }
-    // }
-
     static function insererDansTable($contenu, $url) {
         global $wpdb;
+        try{
         $table_disclaimer = $wpdb->prefix.'disclaimer_options';
         $sql = $wpdb->prepare(
             "
@@ -77,13 +58,23 @@ class DisclaimerGestionTable {
                 WHERE id_disclaimer = '%s'
             ", $contenu, $url, 1
         );
+        // %s permet simplement de préciser qu'une valeur string est attendue
         $wpdb->query($sql);
+        // requête de mise à jour des données dans la table
+        echo '<span style="color:green; font-size:16px;">Les données ont été correctement été mises à jour !</span>';
+        // si succes message de succes
+        } catch (Exception $e){
+            echo '<span style="color:red; font-size:16px;">Une erreur est survenue !</span>';
+            // si échec message d'échec
+        }
     }
 
     static function AfficherDonneModal(){
         global $wpdb;
         $query = "SELECT * FROM " . $wpdb->prefix."disclaimer_options";
         $row = $wpdb->get_row($query);
+        // Récupère chaque ligne de donnée de la table disclaimer_options en bdd
+        // notamment elles message_disclaimer & redirection_ko
         $message_disclaimer = $row->message_disclaimer;
         $lien_redirection = $row->redirection_ko;
         return '<div id="monModal" class="modal">
@@ -93,7 +84,7 @@ class DisclaimerGestionTable {
         <a href="#" type="button" rel="modal:close" class="btn-green" id="actionDisclaimer">Oui</a>
         </div>' ;
     }
-
+// Même concept mais renvoi la valeur d'une seule ligne
     static function AfficherLien(){
         global $wpdb;
         $query = "SELECT * FROM " . $wpdb->prefix."disclaimer_options";

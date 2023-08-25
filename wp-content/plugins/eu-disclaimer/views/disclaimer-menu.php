@@ -14,12 +14,11 @@ if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
 // echo getcwd();
 // Me retourne E:\Docs\TRAVAIL_CV_DOC\Code\Logiciels\Laragon\www\wpVapobar\wp-admin
 // Pourquoi pas le chemin jusqu'à ce fichier ??
-
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,8 +29,8 @@ if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
     <h1>EU DISCLAIMER</h1>
     <br>
     <h2>Configuration</h2>
-    <p><?php echo @$message; ?></p>
     <form method="post" action="" novalidate="novalidate">
+        <!-- Formulaire bootstrap, valeurs pré-remplies avec les deux dernières fonctions de DisclaimerGestionTable -->
         <table class="form-table">
             <tr>
                 <th scope="row">
@@ -63,9 +62,6 @@ if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
         Exemple : La législation nous impose de vous informer sur la nocivité des produits à base de nicotine, 
         vous devez avoir plus de 18 ans pour consulter ce site !
     </p>
-    <br>
-    <!-- Message confirmant la màj -->
-    <p><?php if(isset($message)) echo $message; ?></p>
     <br>
     <h3>
         Centre AFPA / session DWWM

@@ -1,5 +1,6 @@
 function safe(){
     console.log("log: fonction safe ");
+    // une fois le doc chargé lance le tout
 
 if(lireUnCookie('eu-disclaimer-vapobar') != "ejD86j7ZXF3x"){
     $("#monModal").modal({
@@ -8,6 +9,8 @@ if(lireUnCookie('eu-disclaimer-vapobar') != "ejD86j7ZXF3x"){
         showClose: false
     });
 }
+// S'il n'y a pas le cookie, cela active le disclaimer qui bloque la page
+
 function creerUnCookie(nomCookie, valeurCookie, dureeJours){
     console.log("log: fonction creerUnCookie ");
     // Si le nombre de jours est spécifié
@@ -30,7 +33,7 @@ function lireUnCookie(nomCookie){
     var nomFormate = nomCookie + "=";
     // Tableau contenant tous les cookies
     var tableauCookies = document.cookie.split(';');
-    // Recherche dans le tableau le cookie  en  question
+    // Recherche dans le tableau le cookie en question
     console.log(tableauCookies);
     for(var i=0; i < tableauCookies.length; i++){
         var cookieTrouve = tableauCookies[i];
@@ -38,6 +41,7 @@ function lireUnCookie(nomCookie){
         while (cookieTrouve.charAt(0) == ' '){
             cookieTrouve = cookieTrouve.substring(1, cookieTrouve.length);
         }
+        // Et si il n'y a plus d'espace devant on retourne le résultat qui devrait être le mix des deux paramètres
         if(cookieTrouve.indexOf(nomFormate) == 0){
             return cookieTrouve.substring(nomFormate.length, cookieTrouve.length);
         }
