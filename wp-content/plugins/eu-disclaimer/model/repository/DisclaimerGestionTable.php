@@ -94,6 +94,12 @@ class DisclaimerGestionTable {
         </div>' ;
     }
 
-
+    static function AfficherMenu(){
+        global $wpdb;
+        $query = "SELECT * FROM " . $wpdb->prefix."disclaimer_options";
+        $row = $wpdb->get_row($query);
+        $message_disclaimer = $row->message_disclaimer;
+        $lien_redirection = $row->redirection_ko;
+    }
 
 }

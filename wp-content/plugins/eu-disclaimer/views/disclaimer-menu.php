@@ -11,6 +11,13 @@ if (!empty($_POST['message_disclaimer']) && !empty($_POST['url_redirection'])) {
     DisclaimerGestionTable::insererDansTable($text->getMessageDisclaimer(),$text->getRedirectionko());
     // On fait appel à la classe DisclaimerGestionTable et sa fonction insererDansTable avec les 2 valeurs précédemment établies
 }
+// echo getcwd();
+// Me retourne E:\Docs\TRAVAIL_CV_DOC\Code\Logiciels\Laragon\www\wpVapobar\wp-admin
+// Pourquoi ??
+
+require_once (dirname(__DIR__).'../model/repository/DisclaimerGestionTable.php');
+DisclaimerGestionTable::AfficherMenu();
+
 ?>
 
 

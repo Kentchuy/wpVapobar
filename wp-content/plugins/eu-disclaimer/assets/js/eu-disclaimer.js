@@ -20,8 +20,8 @@ function creerUnCookie(nomCookie, valeurCookie, dureeJours){
     // Si aucune valeur de jour n'est spécifiée
     else{
         var expire = "";
-        document.cookie = nomCookie + "+" + valeurCookie + expire + "; path=/";
     }
+    document.cookie = nomCookie + "=" + valeurCookie + expire + "; path=/";
 }
 
 function lireUnCookie(nomCookie){
@@ -31,6 +31,7 @@ function lireUnCookie(nomCookie){
     // Tableau contenant tous les cookies
     var tableauCookies = document.cookie.split(';');
     // Recherche dans le tableau le cookie  en  question
+    console.log(tableauCookies);
     for(var i=0; i < tableauCookies.length; i++){
         var cookieTrouve = tableauCookies[i];
         // Tant que l'on trouve un espace on le supprime
