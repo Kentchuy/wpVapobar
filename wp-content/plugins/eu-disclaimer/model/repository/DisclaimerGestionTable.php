@@ -66,7 +66,7 @@ class DisclaimerGestionTable {
     //         return $message_inserer_valeur = '<span style="color:red; font-size:16px;">Une erreur est survenue !</span>';
     //     }
     // }
-// %d sur id_disclaimer ?
+
     static function insererDansTable($contenu, $url) {
         global $wpdb;
         $table_disclaimer = $wpdb->prefix.'disclaimer_options';

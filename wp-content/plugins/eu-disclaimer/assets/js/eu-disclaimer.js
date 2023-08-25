@@ -1,11 +1,13 @@
 function safe(){
     console.log("log: fonction safe ");
-$("#monModal").modal({
-    escapeClose: false,
-    clickClose: false,
-    showClose: false
-});
 
+if(lireUnCookie('eu-disclaimer-vapobar') != "ejD86j7ZXF3x"){
+    $("#monModal").modal({
+        escapeClose: false,
+        clickClose: false,
+        showClose: false
+    });
+}
 function creerUnCookie(nomCookie, valeurCookie, dureeJours){
     console.log("log: fonction creerUnCookie ");
     // Si le nombre de jours est spécifié
@@ -40,6 +42,7 @@ function lireUnCookie(nomCookie){
         }
     }
     // On retourne une valeur null dans le cas où aucun cookie n'est trouvé
+    console.log("log: fonction lireUnCookie echec aucun cookie trouvé");
     return null;
 }
 
@@ -48,7 +51,7 @@ document.getElementById("actionDisclaimer").addEventListener("click", accepterLe
 // Création d'une fonction que l'on va associer au bouton Oui de notre modal par le biais de onclick
 function accepterLeDisclaimer(){
     console.log("log: fonction accepterLeDisclaimer");
-    creerUnCookie('eu-disclaimer-vapobar', "Disclaimer accepté !", 1);
+    creerUnCookie('eu-disclaimer-vapobar', "ejD86j7ZXF3x", 1);
     var cookie = lireUnCookie('eu-disclaimer-vapobar');
     alert(cookie);
 }
